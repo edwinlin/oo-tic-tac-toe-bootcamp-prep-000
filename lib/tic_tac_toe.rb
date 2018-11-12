@@ -58,27 +58,22 @@ def turn_count
 end
 
 def current_player
-  # if turn_count(board) % 2 == 0
-  #   return "X"
-  # else
-  #   return "O"
-  # end
  turn_count % 2 == 0 ? "X":"O"
 end
 
-def won?(board)
+def won?
   WIN_COMBINATIONS.each do |combo|
-    if combo.all? { |index| board[index] == "X"}
+    if combo.all? { |index| @board[index] == "X"}
       return combo
-    elsif combo.all? { |index| board[index] == "O"}
+    elsif combo.all? { |index| @board[index] == "O"}
       return combo
     end
   end
   return false
 end
 
-def full?(board)
-  board.each do |ele|
+def full?
+  @board.each do |ele|
     if ele == " "
       return false
     end
@@ -86,37 +81,36 @@ def full?(board)
   return true
 end
 
-def draw?(board)
-  if full?(board) && !won?(board)
+def draw?
+  if full?(@board) && !won?(@board)
     return true
   end
   
   return false
 end
 
-def over?(board)
-  if won?(board) || draw?(board) || full?(board)
+def over?
+  if won?(@board) || draw?(@board) || full?(@board)
     return true
   end
 end
 
-def winner(board)
-  if isWinner = won?(board)
-    return board[isWinner[0]]
+def winner
+  if isWinner = won?
+    return @board[isWinner[0]]
   end
 end
 
-def play(board)
-  while !over?(board)
-    turn(board)
+def play
+  while !over?
+    turn
   end
-  if won?(board)
-    puts "Congratulations #{winner(board)}!"
+  if won?
+    puts "Congratulations #{winner}!"
   end
-  if draw?(board)
+  if draw?
     puts "Cat's Game!"
   end
-
 end
 
 end
